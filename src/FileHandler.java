@@ -19,4 +19,16 @@ public class FileHandler {
             lock.unlock();
         }
     }
+    public  void  readLine() throws  InterruptedException{
+        lock.lock();
+        try{
+            authorCondition.await();
+            String[] lines = fileContent.split("\n");
+            String lineToRead = lines[lines.length-2];
+            System.out.println("Odczytano linię: " +lineToRead);
+            writerCondition.signal();
+        }finally {
+            lock.unlock();
+        }
+    }
 }
