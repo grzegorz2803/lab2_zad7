@@ -8,7 +8,7 @@ public class FileHandler {
     private Condition authorCondition = lock.newCondition();
     private Condition writerCondition = lock.newCondition();
 
-    private void writeLine(String line) throws InterruptedException{
+    public void writeLine(String line) throws InterruptedException{
         lock.lock();
         try{
             writerCondition.await(); // autor czeka na odczyt poprzedniej lini
