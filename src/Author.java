@@ -17,13 +17,16 @@ public class Author implements Runnable{
     @Override
     public void run() {
         try {
-            lock.lock();
-            fileProcessor.readFromFIle();
-            writerCondition.signal();
+            while (true) {
+                lock.lock();
+
+                fileProcessor.readFromFile();
+                writerCondition.signal();
+                lock.unlock();
+                Thread.sleep(1000);
+            }
         }catch (IOException | InterruptedException e){
             e.printStackTrace();
-        }finally {
-            lock.unlock();
         }
         }
 }

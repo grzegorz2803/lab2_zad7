@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Scanner;
 
 public class FileProcessor {
     private  String fileName;
@@ -7,21 +8,24 @@ public class FileProcessor {
     public  FileProcessor(String fileName){
         this.fileName = fileName;
     }
-    public synchronized void readFromFIle() throws IOException, InterruptedException{
-        try(BufferedReader reader = new BufferedReader(new FileReader(fileName))){
+    public synchronized void readFromFile() throws IOException, InterruptedException {
+        try (FileReader fileReader = new FileReader(fileName);
+             Scanner scanner = new Scanner(fileReader)) {
             StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = reader.readLine())!=null){
-                sb.append(line).append("\n");
+            while (scanner.hasNextLine()) {
+                sb.append(scanner.nextLine()).append("\n");
             }
-            content = sb.toString();
-            System.out.println("Autor: Odczytał zawartość pliku");
+            String[] lines = sb.toString().split("\n");
+            System.out.println("Odczytano: "+lines[lines.length-1]);
+            Thread.sleep(5000);
         }
     }
-    public synchronized void writeToFile() throws  IOException, InterruptedException {
+
+
+    public synchronized void writeToFile(String newLine) throws  IOException, InterruptedException {
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))){
-            writer.write("Pisarz napisał nową linie. \n");
-            System.out.println("Pisarz wpisał nową linie");
+            writer.write(newLine+"\n");
+            System.out.println("Wpisano: "+newLine);
         }
     }
     public synchronized String getContent(){
