@@ -18,7 +18,7 @@ public class FileProcessor {
             System.out.println("Autor: Odczytał zawartość pliku");
         }
     }
-    public synchronized void wiriteToFile() throws  IOException, InterruptedException {
+    public synchronized void writeToFile() throws  IOException, InterruptedException {
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))){
             writer.write("Pisarz napisał nową linie. \n");
             System.out.println("Pisarz wpisał nową linie");
